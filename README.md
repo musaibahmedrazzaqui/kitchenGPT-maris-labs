@@ -6,7 +6,7 @@ It will be integrated with a flask server and a React Frontend to have a form, i
 Then the response will be displayed on the frontend. 
 
 # Console Screenshots of response:
-![Sample Image](images/response.png)
-![Second Image](images/more_accurate.png)
+![Sample Image](images/response.PNG)
+![Second Image](images/more_accurate.PNG)
 
 
