@@ -14,11 +14,12 @@ fine_tuned_model="davinci:ft-personal-2023-08-21-14-07-13"
 
 @app.route('/', methods=['GET'])
 def check_server():
+    print("HI")
     return "Server is live!"
 
 @app.route('/submit', methods=['POST'])
 def submit_ingredients():
-    print("Received ingredients: %s", request)
+    print("request %s", request)
     try:
         data = request.json
         filled_ingredients = data.get('ingredients')

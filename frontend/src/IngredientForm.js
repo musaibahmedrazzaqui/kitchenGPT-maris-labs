@@ -14,6 +14,7 @@ function IngredientForm() {
   };
 
   const handleSubmit = async (e) => {
+    console.log("EVENT", ingredients);
     e.preventDefault();
     setIsLoading(true);
     setResponse("");
@@ -26,13 +27,17 @@ function IngredientForm() {
       alert("Please add three or more ingredients to proceed.");
       return;
     }
-
+    console.log("filledingredients", filledIngredients);
     try {
-      const response = await axios.post("http://127.0.0.1:5000/submit", {
-        ingredients: filledIngredients,
-      });
-      console.log(response);
-      setResponse(response.data);
+      const response = await axios.post(
+        "https://musaibinteract.azurewebsites.net/submit",
+        {
+          ingredients: filledIngredients,
+        }
+      );
+      //const response = await axios.get("https://kitchengpt.azurewebsites.net/");
+      console.log("response", response);
+      setResponse(response.data.answer);
     } catch (error) {
       console.error(error);
     } finally {
