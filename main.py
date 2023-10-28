@@ -50,7 +50,7 @@ file_id = upload_response.id
 print(file_id)
 
 
-fine_tune_response = openai.FineTune.create(training_file=file_id, model="davinci")
+fine_tune_response = openai.FineTune.create(training_file=file_id, model="gpt-3.5-turbo-0613)
 print(fine_tune_response)
 
 
