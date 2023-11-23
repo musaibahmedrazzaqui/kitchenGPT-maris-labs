@@ -1,83 +1,107 @@
-import React, { useState } from "react";
-import axios from "axios";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
-function IngredientForm() {
-  const [ingredients, setIngredients] = useState(["", "", "", "", ""]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [response, setResponse] = useState("");
-  const requiredFields = 3;
+import './Chatbot.css'; // Import your CSS file for styles
 
-  const handleChange = (index, value) => {
-    const newIngredients = [...ingredients];
-    newIngredients[index] = value;
-    setIngredients(newIngredients);
+const Chatbot = () => {
+  const [messages, setMessages] = useState([]);
+  const [inputMessage, setInputMessage] = useState('');
+  const [chatMode, setChatMode] = useState('normal');
+
+  useEffect(() => {
+    if (inputMessage.trim() !== '') {
+      fetchMessages();
+    }
+  }, [chatMode]);
+  const fetchMessages = async () => {
+    try {
+      const apiUrl =
+        chatMode === 'dropout'
+          ? 'http://localhost:8000/chatbot-dropout'
+          : 'http://localhost:8000/chatbot-normal';
+
+      const response = await axios.post(apiUrl, { message: inputMessage });
+      
+      console.log("inutMessage",response.data.response)
+      setMessages([
+        ...messages,
+        { text: inputMessage, type: 'user' },
+        { text: response.data.response, type: 'assistant' },
+      ]);
+      setInputMessage('');
+    } catch (error) {
+      console.error('Error fetching messages:', error);
+    }
   };
 
-  const handleSubmit = async (e) => {
-    console.log("EVENT", ingredients);
-    e.preventDefault();
-    setIsLoading(true);
-    setResponse("");
+  const handleInputChange = (e) => {
+    setInputMessage(e.target.value);
+  };
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      handleSendMessage();
+    }
+  };
+  const handleSendMessage = () => {
+    if (inputMessage.trim() !== '') {
+      fetchMessages();
+    }
+  };
 
-    const filledIngredients = ingredients.filter(
-      (ingredient) => ingredient.trim() !== ""
-    );
-    if (filledIngredients.length < requiredFields) {
-      setIsLoading(false);
-      alert("Please add three or more ingredients to proceed.");
-      return;
-    }
-    console.log("filledingredients", filledIngredients);
-    try {
-      const response = await axios.post(
-        "https://musaibinteract.azurewebsites.net/submit",
-        {
-          ingredients: filledIngredients,
-        }
-      );
-      //const response = await axios.get("https://kitchengpt.azurewebsites.net/");
-      console.log("response", response);
-      setResponse(response.data.answer);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setIsLoading(false);
-    }
+  const handleModeChange = (e) => {
+    setChatMode(e.target.value);
+    setMessages([])
   };
 
   return (
-    <div className="container">
-      <div className="form-container">
-        <h2>Ingredient Form</h2>
-        <form onSubmit={handleSubmit}>
-          {ingredients.map((ingredient, index) => (
-            <input
-              key={index}
-              type="text"
-              value={ingredient}
-              onChange={(e) => handleChange(index, e.target.value)}
-              placeholder={`Ingredient ${
-                index + 1
-              } with quantity (e.g. 2 Eggs)`}
-            />
+    <div className="chatbot-container">
+
+      <div className="header">
+
+        <div className="radio-container">
+          <input
+            type="radio"
+            id="normal"
+            name="chatMode"
+            value="normal"
+            checked={chatMode === 'normal'}
+            onChange={handleModeChange}
+          />
+          <label htmlFor="normal">Normal</label>
+
+          <input
+            type="radio"
+            id="dropout"
+            name="chatMode"
+            value="dropout"
+            checked={chatMode === 'dropout'}
+            onChange={handleModeChange}
+          />
+          <label htmlFor="dropout">Dropout</label>
+        </div>
+        <h5 style={{fontSize:'12px'}}>Use a prompt like this:"My age group is AGE_GROUP. Tell me about a user's experience with DRUG_NAME"</h5>
+      </div>
+      <div className="chatbox">
+        <div className="messages">
+          {messages.map((msg, index) => (
+            <div key={index} className={`message ${msg.type}`}>
+              {msg.text}
+            </div>
           ))}
-          <button type="submit" disabled={isLoading}>
-            Submit
-          </button>
-        </form>
-        {isLoading ? (
-          <div className="loading-container">
-            <div className="loading-circle"></div>
-            <div>Loading...</div>
-          </div>
-        ) : (
-          <div className="result-container">
-            <h5>{response}</h5>
-          </div>
-        )}
+        </div>
+        <div className="input-container">
+          <input
+            type="text"
+            value={inputMessage}
+            onChange={handleInputChange}
+            onKeyDown={handleKeyDown}
+            placeholder="Type a message..."
+          />
+          <button onClick={handleSendMessage}>Send</button>
+        </div>
       </div>
     </div>
   );
-}
+};
 
-export default IngredientForm;
+export default Chatbot;

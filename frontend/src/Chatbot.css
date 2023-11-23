@@ -1,0 +1,92 @@
+/* Chatbot.css */
+
+.chatbot-container {
+    max-width: 350px;
+    margin: 50px auto;
+    
+  }
+  .heading-container {
+    background-color: #5e4caf;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    position: relative;
+  }
+  .header {
+    background-color: #4caf50;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    position: relative;
+  }
+  
+  .toggle-button {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+  }
+  
+  .chatbox {
+    border: 1px solid #741414;
+    border-radius: 5px;
+    overflow: hidden;
+  }
+  
+  .messages {
+    padding: 10px;
+    max-height: 300px;
+    overflow-y: auto;
+    font-family: Arial, sans-serif;
+    background-color:rgb(255, 255, 255)
+  }
+  
+  .message {
+    margin-bottom: 10px;
+    padding: 8px;
+    border-radius: 8px;
+    max-width: 80%;
+  }
+  
+  .user {
+    background-color: #4caf50;
+    color: #fff;
+    align-self: flex-end;
+  }
+  
+  .assistant {
+    background-color: #5e4caf;
+    color: #fff;
+    align-self: flex-start;
+    margin-left: 50px;
+  }
+
+  
+  .input-container {
+    display: flex;
+    padding: 10px;
+    background-color: #f9f9f9;
+  }
+  
+  input {
+    flex: 1;
+    padding: 8px;
+    margin-right: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px; /* Add this line to set a font size */
+  }
+  
+  button {
+    padding: 8px;
+    background-color: #4caf50;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
