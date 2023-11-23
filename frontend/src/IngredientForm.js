@@ -17,8 +17,8 @@ const Chatbot = () => {
     try {
       const apiUrl =
         chatMode === 'dropout'
-          ? 'http://localhost:8000/chatbot-dropout'
-          : 'http://localhost:8000/chatbot-normal';
+          ? 'https://prod-finetune-gpt.azurewebsites.net/chatbot-dropout'
+          : 'https://prod-finetune-gpt.azurewebsites.net/chatbot-normal';
 
       const response = await axios.post(apiUrl, { message: inputMessage });
       

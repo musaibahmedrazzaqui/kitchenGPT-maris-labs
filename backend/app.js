@@ -3,7 +3,7 @@ const axios = require('axios');
 const bodyParser = require('body-parser');
 const cors = require('cors'); // Add this line
 const OpenAI=require('openai')
-//require('dotenv').config()
+require('dotenv').config()
 const app = express();
 const port = 8000 || process.env.PORT;
 
