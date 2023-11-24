@@ -17,8 +17,8 @@ const Chatbot = () => {
     try {
       const apiUrl =
         chatMode === 'dropout'
-          ? 'http://54.177.221.64:8001/chatbot-dropout'
-          : 'http://54.177.221.64:8001/chatbot-normal';
+          ? 'https://backend-finetune-gpt.vercel.app/api/product/chatbot-dropout'
+          : 'https://backend-finetune-gpt.vercel.app/api/product/chatbot-normal';
 
       const response = await axios.post(apiUrl, { message: inputMessage });
       
