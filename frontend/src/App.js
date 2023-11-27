@@ -30,7 +30,7 @@ const App = () => {
   const fetchMessages = async (text) => {
     try {
       const apiUrl =
-        chatMode === 'dropout'
+        chatMode === 'dropout' || 'user'
           ? 'https://backend-finetune-gpt.vercel.app/api/product/chatbot-dropout'
           : 'https://backend-finetune-gpt.vercel.app/api/product/chatbot-normal';
       const newMessageUser = {
@@ -118,6 +118,15 @@ const App = () => {
           onChange={handleModeChange}
         />
         <label htmlFor="dropout">Dropout</label>
+        <input
+          type="radio"
+          id="dropout"
+          name="chatMode"
+          value="user"
+          checked={chatMode === 'user'}
+          onChange={handleModeChange}
+        />
+        <label htmlFor="dropout">User Generated Data</label>
         <h5 style={{ fontSize: '12px', textAlign: 'center' }}>
         Use a prompt like this: "My age group is AGE_GROUP. Tell me about a user's experience with DRUG_NAME"
       </h5>
